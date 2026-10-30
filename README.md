@@ -4,4 +4,4 @@ Aplikasi Navigasi Kampus Berbasis Augmented Reality (ARCore) untuk Universitas I
 
 ## Varian Aplikasi
 - **Admin (`com.uika.navigator.admin`)**: Digunakan untuk pemetaan, penambahan, dan pengelolaan data node rute ke Firebase Firestore.
-- **User (`com.uika.navigator.user`)**: Digunakan oleh mahasiswa dan pengunjung untuk navigasi ruangan dan gedung secara interaktif.
+- **User (`com.uika.navigator.user`)**: Digunakan oleh mahasiswa dan pengunjung untuk navigasi gedung secara interaktif.
