@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuesioner Evaluasi Kebermanfaatan Aplikasi Navigasi AR Gedung UIKA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C47FF;
+            --primary-light: #8B6FFF;
+            --primary-dark: #5535D4;
+            --bg: #F0EBF8;
+            --card: #FFFFFF;
+            --text: #1A1A2E;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --success: #10B981;
+            --success-bg: #ECFDF5;
+            --error: #EF4444;
+            --likert-1: #EF4444;
+            --likert-2: #F97316;
+            --likert-3: #EAB308;
+            --likert-4: #22C55E;
+            --likert-5: #6C47FF;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 25px rgba(108,71,255,0.12), 0 4px 10px rgba(0,0,0,0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px 16px 60px;
+        }
+
+        /* Header */
+        .header-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, #4F46E5 50%, #7C3AED 100%);
+            border-radius: 16px;
+            padding: 40px 32px;
+            color: white;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50%;
+        }
+
+        .header-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+        }
+
+        .header-banner h1 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-banner p {
+            font-size: 0.85rem;
+            opacity: 0.92;
+            position: relative;
+            z-index: 1;
+            line-height: 1.75;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Progress */
+        .progress-container {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .progress-count {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            border-radius: 3px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .card:hover { border-color: rgba(108, 71, 255, 0.1); }
+        .card.has-error { border-color: var(--error); }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .icon.benefit { background: #EDE9FE; }
+        .icon.ease    { background: #DBEAFE; }
+        .icon.ar      { background: #D1FAE5; }
+        .icon.satis   { background: #FCE7F3; }
+        .icon.ident   { background: #E0E7FF; }
+        .icon.saran   { background: #FEF3C7; }
+
+        .section-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            margin-left: 42px;
+        }
+
+        /* Form inputs */
+        .form-group { margin-bottom: 20px; }
+        .form-group:last-child { margin-bottom: 0; }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .form-label .req { color: var(--error); margin-left: 2px; }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            color: var(--text);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #FAFAFA;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 71, 255, 0.1);
+            background: white;
+        }
+
+        .form-input.input-error { border-color: var(--error); }
+
+        .radio-group-yn { display: flex; gap: 16px; }
+
+        .radio-yn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .radio-yn input[type="radio"] {
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .radio-yn span { font-size: 0.875rem; }
+
+        .error-msg {
+            color: var(--error);
+            font-size: 0.75rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .error-msg.show { display: block; }
+
+        /* Likert Scale */
+        .likert-header {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 8px;
+            padding: 10px 0;
+            background: #F9FAFB;
+            border-radius: 8px;
+        }
+
+        .likert-header-item {
+            flex: 1;
+            max-width: 110px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .likert-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #F3F4F6;
+            transition: background 0.3s, border-radius 0.3s;
+        }
+
+        .likert-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .likert-item:first-child { padding-top: 0; }
+
+        .likert-item.highlight-error {
+            background: #FEF2F2;
+            border-radius: 8px;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .likert-question {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 14px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .q-num {
+            color: var(--primary);
+            font-weight: 700;
+            flex-shrink: 0;
+            min-width: 26px;
+        }
+
+        .likert-options {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .likert-option {
+            flex: 1;
+            max-width: 110px;
+        }
+
+        .likert-option input[type="radio"] { display: none; }
+
+        .likert-option label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 4px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #FAFAFA;
+        }
+
+        .likert-option label:hover {
+            border-color: var(--primary-light);
+            background: #F5F0FF;
+            transform: translateY(-1px);
+        }
+
+        .likert-option label .circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .likert-option label .lbl { font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); text-align: center; }
+
+        .likert-option input:checked + label { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .likert-option input:checked + label .circle { border-width: 6px; }
+
+        .likert-option[data-v="1"] input:checked + label { border-color: var(--likert-1); background: #FEF2F2; }
+        .likert-option[data-v="1"] input:checked + label .circle { border-color: var(--likert-1); }
+        .likert-option[data-v="2"] input:checked + label { border-color: var(--likert-2); background: #FFF7ED; }
+        .likert-option[data-v="2"] input:checked + label .circle { border-color: var(--likert-2); }
+        .likert-option[data-v="3"] input:checked + label { border-color: var(--likert-3); background: #FEFCE8; }
+        .likert-option[data-v="3"] input:checked + label .circle { border-color: var(--likert-3); }
+        .likert-option[data-v="4"] input:checked + label { border-color: var(--likert-4); background: #F0FDF4; }
+        .likert-option[data-v="4"] input:checked + label .circle { border-color: var(--likert-4); }
+        .likert-option[data-v="5"] input:checked + label { border-color: var(--likert-5); background: #F5F0FF; }
+        .likert-option[data-v="5"] input:checked + label .circle { border-color: var(--likert-5); }
+
+        /* Textarea */
+        .form-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            color: var(--text);
+            resize: vertical;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #FAFAFA;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 71, 255, 0.1);
+            background: white;
+        }
+
+        /* Buttons */
+        .submit-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-submit {
+            padding: 14px 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 71, 255, 0.3);
+        }
+
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(108, 71, 255, 0.4); }
+        .btn-submit:active { transform: translateY(0); }
+
+        .btn-clear {
+            padding: 14px 24px;
+            background: transparent;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-clear:hover { background: #F5F0FF; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal .success-icon {
+            width: 72px; height: 72px;
+            background: var(--success-bg);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+
+        .modal h2 { font-size: 1.3rem; margin-bottom: 8px; }
+        .modal p { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
+
+        .modal-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+        .btn-download {
+            padding: 12px 28px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-download:hover { background: #059669; }
+
+        .btn-close-modal {
+            padding: 12px 28px;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-close-modal:hover { background: #F9FAFB; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 16px 10px 40px; }
+            .header-banner { padding: 28px 20px; }
+            .header-banner h1 { font-size: 1.15rem; }
+            .card { padding: 20px 16px; }
+            .likert-options { gap: 4px; }
+            .likert-option label { padding: 8px 2px; }
+            .likert-option label .lbl { font-size: 0.6rem; }
+            .submit-section { flex-direction: column; }
+            .btn-submit, .btn-clear { width: 100%; }
+            .section-desc { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-banner">
+        <div class="badge">📋 Kuesioner Penelitian Skripsi</div>
+        <h1>Evaluasi Kebermanfaatan Aplikasi Navigasi AR Gedung UIKA</h1>
+        <p>
+            <strong>Peneliti:</strong> Raka Andhika (211106040888)<br>
+            <strong>Program Studi:</strong> Teknik Informatika, Fakultas Teknik dan Sains<br>
+            <strong>Universitas:</strong> Ibn Khaldun Bogor<br><br>
+            Mohon kesediaannya untuk mengisi kuesioner berikut setelah mencoba aplikasi navigasi AR.
+            Jawaban Anda sangat berharga untuk penelitian ini. Terima kasih! 🙏
+        </p>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-header">
+            <span class="progress-label">Progres Pengisian</span>
+            <span class="progress-count" id="progressCount">0 / 21</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <form id="mainForm" novalidate>
+
+        <!-- ===== IDENTITAS RESPONDEN ===== -->
+        <div class="card" id="cardIdent">
+            <div class="section-title"><div class="icon ident">👤</div> Identitas Responden</div>
+            <p class="section-desc">Informasi dasar tentang Anda sebagai responden.</p>
+
+            <div class="form-group">
+                <label class="form-label">Nama Lengkap <span class="req">*</span></label>
+                <input type="text" class="form-input" name="nama" required placeholder="Masukkan nama lengkap">
+                <div class="error-msg">Nama wajib diisi</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Asal Universitas <span class="req">*</span></label>
+                <input type="text" class="form-input" name="universitas" required placeholder="Contoh: Universitas Ibn Khaldun Bogor">
+                <div class="error-msg">Asal universitas wajib diisi</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Semester / Angkatan <span class="req">*</span></label>
+                <input type="text" class="form-input" name="semester" required placeholder="Contoh: Semester 6 / Angkatan 2021">
+                <div class="error-msg">Semester/angkatan wajib diisi</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Apakah Anda pernah mengunjungi kampus UIKA sebelumnya? <span class="req">*</span></label>
+                <div class="radio-group-yn">
+                    <label class="radio-yn"><input type="radio" name="pernah_uika" value="Ya" required><span>Ya</span></label>
+                    <label class="radio-yn"><input type="radio" name="pernah_uika" value="Tidak"><span>Tidak</span></label>
+                </div>
+                <div class="error-msg">Pilih salah satu</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Apakah Anda pernah menggunakan aplikasi Augmented Reality sebelumnya? <span class="req">*</span></label>
+                <div class="radio-group-yn">
+                    <label class="radio-yn"><input type="radio" name="pernah_ar" value="Ya" required><span>Ya</span></label>
+                    <label class="radio-yn"><input type="radio" name="pernah_ar" value="Tidak"><span>Tidak</span></label>
+                </div>
+                <div class="error-msg">Pilih salah satu</div>
+            </div>
+        </div>
+
+        <!-- ===== ASPEK 1: PERSEPSI KEBERMANFAATAN ===== -->
+        <div class="card">
+            <div class="section-title"><div class="icon benefit">🎯</div> Aspek 1 — Persepsi Kebermanfaatan</div>
+            <p class="section-desc">Sejauh mana aplikasi dirasakan bermanfaat oleh pengguna dalam konteks navigasi kampus.</p>
+            <div class="likert-header">
+                <div class="likert-header-item">STS (1)</div>
+                <div class="likert-header-item">TS (2)</div>
+                <div class="likert-header-item">N (3)</div>
+                <div class="likert-header-item">S (4)</div>
+                <div class="likert-header-item">SS (5)</div>
+            </div>
+
+            <div class="likert-item" id="li1">
+                <div class="likert-question"><span class="q-num">1.</span><span>Aplikasi ini membantu saya dalam menemukan lokasi gedung di lingkungan kampus UIKA.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q1" value="1" id="q1_1"><label for="q1_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q1" value="2" id="q1_2"><label for="q1_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q1" value="3" id="q1_3"><label for="q1_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q1" value="4" id="q1_4"><label for="q1_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q1" value="5" id="q1_5"><label for="q1_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li2">
+                <div class="likert-question"><span class="q-num">2.</span><span>Aplikasi ini mempercepat waktu saya dalam mencari gedung tujuan dibandingkan tanpa aplikasi.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q2" value="1" id="q2_1"><label for="q2_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q2" value="2" id="q2_2"><label for="q2_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q2" value="3" id="q2_3"><label for="q2_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q2" value="4" id="q2_4"><label for="q2_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q2" value="5" id="q2_5"><label for="q2_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li3">
+                <div class="likert-question"><span class="q-num">3.</span><span>Dengan aplikasi ini, saya dapat menemukan gedung tujuan secara mandiri tanpa perlu bertanya kepada orang lain.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q3" value="1" id="q3_1"><label for="q3_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q3" value="2" id="q3_2"><label for="q3_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q3" value="3" id="q3_3"><label for="q3_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q3" value="4" id="q3_4"><label for="q3_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q3" value="5" id="q3_5"><label for="q3_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li4">
+                <div class="likert-question"><span class="q-num">4.</span><span>Panduan navigasi 3D (penunjuk arah virtual) di layar kamera memudahkan saya memahami arah yang harus dituju.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q4" value="1" id="q4_1"><label for="q4_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q4" value="2" id="q4_2"><label for="q4_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q4" value="3" id="q4_3"><label for="q4_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q4" value="4" id="q4_4"><label for="q4_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q4" value="5" id="q4_5"><label for="q4_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li5">
+                <div class="likert-question"><span class="q-num">5.</span><span>Aplikasi ini lebih membantu dibandingkan papan penunjuk arah konvensional yang ada di kampus.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q5" value="1" id="q5_1"><label for="q5_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q5" value="2" id="q5_2"><label for="q5_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q5" value="3" id="q5_3"><label for="q5_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q5" value="4" id="q5_4"><label for="q5_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q5" value="5" id="q5_5"><label for="q5_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ASPEK 2: KEMUDAHAN PENGGUNAAN ===== -->
+        <div class="card">
+            <div class="section-title"><div class="icon ease">💡</div> Aspek 2 — Persepsi Kemudahan Penggunaan</div>
+            <p class="section-desc">Seberapa mudah aplikasi digunakan sehingga mendukung kebermanfaatannya.</p>
+            <div class="likert-header">
+                <div class="likert-header-item">STS (1)</div>
+                <div class="likert-header-item">TS (2)</div>
+                <div class="likert-header-item">N (3)</div>
+                <div class="likert-header-item">S (4)</div>
+                <div class="likert-header-item">SS (5)</div>
+            </div>
+
+            <div class="likert-item" id="li6">
+                <div class="likert-question"><span class="q-num">6.</span><span>Tampilan antarmuka aplikasi mudah dipahami sehingga saya bisa langsung menggunakannya.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q6" value="1" id="q6_1"><label for="q6_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q6" value="2" id="q6_2"><label for="q6_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q6" value="3" id="q6_3"><label for="q6_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q6" value="4" id="q6_4"><label for="q6_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q6" value="5" id="q6_5"><label for="q6_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li7">
+                <div class="likert-question"><span class="q-num">7.</span><span>Alur penggunaan aplikasi (scan label → pilih tujuan → navigasi) sederhana dan mudah diikuti.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q7" value="1" id="q7_1"><label for="q7_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q7" value="2" id="q7_2"><label for="q7_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q7" value="3" id="q7_3"><label for="q7_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q7" value="4" id="q7_4"><label for="q7_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q7" value="5" id="q7_5"><label for="q7_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li8">
+                <div class="likert-question"><span class="q-num">8.</span><span>Instruksi yang ditampilkan di layar aplikasi sudah cukup jelas untuk memandu saya.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q8" value="1" id="q8_1"><label for="q8_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q8" value="2" id="q8_2"><label for="q8_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q8" value="3" id="q8_3"><label for="q8_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q8" value="4" id="q8_4"><label for="q8_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q8" value="5" id="q8_5"><label for="q8_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li9">
+                <div class="likert-question"><span class="q-num">9.</span><span>Saya tidak memerlukan waktu lama untuk belajar menggunakan aplikasi ini.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q9" value="1" id="q9_1"><label for="q9_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q9" value="2" id="q9_2"><label for="q9_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q9" value="3" id="q9_3"><label for="q9_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q9" value="4" id="q9_4"><label for="q9_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q9" value="5" id="q9_5"><label for="q9_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ASPEK 3: PENGALAMAN AR ===== -->
+        <div class="card">
+            <div class="section-title"><div class="icon ar">🔮</div> Aspek 3 — Pengalaman Augmented Reality</div>
+            <p class="section-desc">Apakah penggunaan teknologi AR memberikan nilai tambah bagi pengalaman navigasi.</p>
+            <div class="likert-header">
+                <div class="likert-header-item">STS (1)</div>
+                <div class="likert-header-item">TS (2)</div>
+                <div class="likert-header-item">N (3)</div>
+                <div class="likert-header-item">S (4)</div>
+                <div class="likert-header-item">SS (5)</div>
+            </div>
+
+            <div class="likert-item" id="li10">
+                <div class="likert-question"><span class="q-num">10.</span><span>Tampilan objek virtual 3D (penunjuk arah) di lingkungan nyata membuat navigasi terasa lebih jelas.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q10" value="1" id="q10_1"><label for="q10_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q10" value="2" id="q10_2"><label for="q10_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q10" value="3" id="q10_3"><label for="q10_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q10" value="4" id="q10_4"><label for="q10_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q10" value="5" id="q10_5"><label for="q10_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li11">
+                <div class="likert-question"><span class="q-num">11.</span><span>Navigasi berbasis AR lebih mudah dipahami dibandingkan menggunakan peta 2D biasa.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q11" value="1" id="q11_1"><label for="q11_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q11" value="2" id="q11_2"><label for="q11_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q11" value="3" id="q11_3"><label for="q11_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q11" value="4" id="q11_4"><label for="q11_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q11" value="5" id="q11_5"><label for="q11_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li12">
+                <div class="likert-question"><span class="q-num">12.</span><span>Pengalaman menggunakan teknologi AR pada aplikasi ini terasa menarik dan interaktif.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q12" value="1" id="q12_1"><label for="q12_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q12" value="2" id="q12_2"><label for="q12_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q12" value="3" id="q12_3"><label for="q12_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q12" value="4" id="q12_4"><label for="q12_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q12" value="5" id="q12_5"><label for="q12_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li13">
+                <div class="likert-question"><span class="q-num">13.</span><span>Teknologi AR pada aplikasi ini memberikan informasi arah yang lebih intuitif dibandingkan metode navigasi lainnya.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q13" value="1" id="q13_1"><label for="q13_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q13" value="2" id="q13_2"><label for="q13_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q13" value="3" id="q13_3"><label for="q13_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q13" value="4" id="q13_4"><label for="q13_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q13" value="5" id="q13_5"><label for="q13_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ASPEK 4: KEPUASAN & REKOMENDASI ===== -->
+        <div class="card">
+            <div class="section-title"><div class="icon satis">💜</div> Aspek 4 — Kepuasan & Rekomendasi</div>
+            <p class="section-desc">Tingkat kepuasan keseluruhan dan kesediaan merekomendasikan aplikasi.</p>
+            <div class="likert-header">
+                <div class="likert-header-item">STS (1)</div>
+                <div class="likert-header-item">TS (2)</div>
+                <div class="likert-header-item">N (3)</div>
+                <div class="likert-header-item">S (4)</div>
+                <div class="likert-header-item">SS (5)</div>
+            </div>
+
+            <div class="likert-item" id="li14">
+                <div class="likert-question"><span class="q-num">14.</span><span>Secara keseluruhan, saya merasa aplikasi ini bermanfaat sebagai alat bantu navigasi di kampus UIKA.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q14" value="1" id="q14_1"><label for="q14_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q14" value="2" id="q14_2"><label for="q14_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q14" value="3" id="q14_3"><label for="q14_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q14" value="4" id="q14_4"><label for="q14_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q14" value="5" id="q14_5"><label for="q14_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li15">
+                <div class="likert-question"><span class="q-num">15.</span><span>Saya akan menggunakan aplikasi ini lagi jika perlu mencari gedung di kampus UIKA.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q15" value="1" id="q15_1"><label for="q15_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q15" value="2" id="q15_2"><label for="q15_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q15" value="3" id="q15_3"><label for="q15_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q15" value="4" id="q15_4"><label for="q15_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q15" value="5" id="q15_5"><label for="q15_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+
+            <div class="likert-item" id="li16">
+                <div class="likert-question"><span class="q-num">16.</span><span>Saya akan merekomendasikan aplikasi ini kepada teman atau pengunjung kampus UIKA.</span></div>
+                <div class="likert-options">
+                    <div class="likert-option" data-v="1"><input type="radio" name="q16" value="1" id="q16_1"><label for="q16_1"><div class="circle"></div><span class="lbl">STS</span></label></div>
+                    <div class="likert-option" data-v="2"><input type="radio" name="q16" value="2" id="q16_2"><label for="q16_2"><div class="circle"></div><span class="lbl">TS</span></label></div>
+                    <div class="likert-option" data-v="3"><input type="radio" name="q16" value="3" id="q16_3"><label for="q16_3"><div class="circle"></div><span class="lbl">N</span></label></div>
+                    <div class="likert-option" data-v="4"><input type="radio" name="q16" value="4" id="q16_4"><label for="q16_4"><div class="circle"></div><span class="lbl">S</span></label></div>
+                    <div class="likert-option" data-v="5"><input type="radio" name="q16" value="5" id="q16_5"><label for="q16_5"><div class="circle"></div><span class="lbl">SS</span></label></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SARAN ===== -->
+        <div class="card">
+            <div class="section-title"><div class="icon saran">💬</div> Saran & Masukan</div>
+            <p class="section-desc">Bagikan saran, kritik, atau masukan Anda untuk perbaikan aplikasi (opsional).</p>
+            <div class="form-group">
+                <textarea class="form-textarea" name="saran" placeholder="Tuliskan saran atau masukan Anda di sini..."></textarea>
+            </div>
+        </div>
+
+        <!-- ===== SUBMIT ===== -->
+        <div class="card">
+            <div class="submit-section">
+                <button type="button" class="btn-clear" onclick="clearForm()">Hapus Jawaban</button>
+                <button type="submit" class="btn-submit">Kirim Jawaban</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="footer">© 2026 Raka Andhika — Teknik Informatika, Universitas Ibn Khaldun Bogor</div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal-overlay" id="successModal">
+    <div class="modal">
+        <div class="success-icon">✅</div>
+        <h2>Terima Kasih!</h2>
+        <p>Jawaban Anda telah berhasil dicatat.<br>Silakan unduh data respons dalam format CSV.</p>
+        <div class="modal-btns">
+            <button class="btn-download" onclick="downloadCSV()">📥 Unduh CSV</button>
+            <button class="btn-close-modal" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const TOTAL_Q = 16;
+const TOTAL_FIELDS = 21; // 3 text + 2 yn + 16 likert
+let savedData = null;
+
+// ---- Progress ----
+function updateProgress() {
+    let filled = 0;
+    document.querySelectorAll('.form-input').forEach(i => { if (i.value.trim()) filled++; });
+    const checkedNames = new Set();
+    document.querySelectorAll('input[type="radio"]:checked').forEach(r => checkedNames.add(r.name));
+    filled += checkedNames.size;
+    const pct = Math.round((filled / TOTAL_FIELDS) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressCount').textContent = filled + ' / ' + TOTAL_FIELDS;
+}
+
+document.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('input', updateProgress);
+    el.addEventListener('change', updateProgress);
+});
+
+// ---- Validation & Submit ----
+document.getElementById('mainForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let valid = true;
+    let firstErr = null;
+
+    // Text inputs
+    document.querySelectorAll('.form-input[required]').forEach(inp => {
+        const err = inp.parentElement.querySelector('.error-msg');
+        if (!inp.value.trim()) {
+            valid = false;
+            err.classList.add('show');
+            inp.classList.add('input-error');
+            if (!firstErr) firstErr = inp;
+        } else {
+            err.classList.remove('show');
+            inp.classList.remove('input-error');
+        }
+    });
+
+    // YN radios
+    ['pernah_uika', 'pernah_ar'].forEach(name => {
+        const checked = document.querySelector(`input[name="${name}"]:checked`);
+        const grp = document.querySelector(`input[name="${name}"]`).closest('.form-group');
+        const err = grp.querySelector('.error-msg');
+        if (!checked) {
+            valid = false;
+            err.classList.add('show');
+            if (!firstErr) firstErr = grp;
+        } else {
+            err.classList.remove('show');
+        }
+    });
+
+    // Likert radios
+    for (let i = 1; i <= TOTAL_Q; i++) {
+        const item = document.getElementById('li' + i);
+        const checked = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!checked) {
+            valid = false;
+            item.classList.add('highlight-error');
+            if (!firstErr) firstErr = item;
+        } else {
+            item.classList.remove('highlight-error');
+        }
+    }
+
+    if (!valid) {
+        firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
+
+    // Collect
+    savedData = {
+        Timestamp: new Date().toLocaleString('id-ID'),
+        Nama: document.querySelector('[name="nama"]').value,
+        Universitas: document.querySelector('[name="universitas"]').value,
+        Semester: document.querySelector('[name="semester"]').value,
+        Pernah_Kunjungi_UIKA: document.querySelector('[name="pernah_uika"]:checked').value,
+        Pernah_Pakai_AR: document.querySelector('[name="pernah_ar"]:checked').value,
+    };
+
+    const labels = [
+        'Membantu_Menemukan_Gedung','Mempercepat_Waktu','Mandiri_Tanpa_Bertanya',
+        'Panduan_3D_Memudahkan','Lebih_Baik_Dari_Papan_Arah',
+        'UI_Mudah_Dipahami','Alur_Mudah_Diikuti','Instruksi_Jelas','Cepat_Belajar',
+        'Objek_3D_Lebih_Jelas','AR_Lebih_Mudah_Dari_Peta_2D','AR_Menarik_Interaktif','AR_Lebih_Intuitif',
+        'Bermanfaat_Keseluruhan','Akan_Digunakan_Lagi','Merekomendasikan'
+    ];
+
+    for (let i = 1; i <= TOTAL_Q; i++) {
+        savedData[labels[i-1]] = document.querySelector(`input[name="q${i}"]:checked`).value;
+    }
+
+    savedData.Saran = document.querySelector('[name="saran"]').value || '-';
+
+    document.getElementById('successModal').classList.add('show');
+});
+
+// ---- CSV Download ----
+function downloadCSV() {
+    if (!savedData) return;
+    const headers = Object.keys(savedData);
+    const values = Object.values(savedData).map(v => `"${String(v).replace(/"/g, '""')}"`);
+    const csv = headers.join(',') + '\n' + values.join(',') + '\n';
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `kuesioner_${savedData.Nama.replace(/\s+/g, '_')}_${Date.now()}.csv`;
+    a.click();
+}
+
+function closeModal() {
+    document.getElementById('successModal').classList.remove('show');
+}
+
+function clearForm() {
+    if (confirm('Apakah Anda yakin ingin menghapus semua jawaban?')) {
+        document.getElementById('mainForm').reset();
+        document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+        document.querySelectorAll('.form-input').forEach(e => e.classList.remove('input-error'));
+        for (let i = 1; i <= TOTAL_Q; i++) {
+            document.getElementById('li' + i).classList.remove('highlight-error');
+        }
+        updateProgress();
+    }
+}
+</script>
+</body>
+</html>

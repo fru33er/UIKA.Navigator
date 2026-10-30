@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FESTU / UIKA Navigator - Web Map Node Editor</title>
+  
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-panel: rgba(15, 23, 42, 0.88);
+      --bg-card: #1e293b;
+      --border: rgba(255, 255, 255, 0.1);
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    #app-container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+    }
+
+    #map {
+      flex: 1;
+      height: 100%;
+      background: #1e293b;
+      z-index: 1;
+    }
+
+    /* Floating Top Toolbar */
+    .top-toolbar {
+      position: absolute;
+      top: 16px;
+      left: 60px;
+      z-index: 1000;
+      background: var(--bg-panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      gap: 8px;
+      width: 250px;
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-size: 13px;
+      width: 100%;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      border-color: var(--border);
+      color: var(--text);
+    }
+    .btn-secondary:hover {
+      background: #334155;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+    }
+    .btn-success:hover {
+      background: #059669;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn-icon {
+      padding: 8px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .btn-icon:hover {
+      background: #334155;
+    }
+
+    /* Mode Selector Bar */
+    .mode-bar {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 3px;
+      gap: 4px;
+    }
+
+    .mode-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.15s ease;
+    }
+
+    .mode-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+    }
+
+    .mode-btn.active.entry-mode {
+      background: var(--success);
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+    }
+
+    .mode-btn.active.link-mode {
+      background: var(--warning);
+      color: #0f172a;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Sidebar Inspector */
+    .sidebar {
+      width: 400px;
+      background: var(--bg-panel);
+      backdrop-filter: blur(16px);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      z-index: 1000;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .sidebar-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar-header h2 {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .form-control {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .stat-box {
+      background: #0f172a;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .nodes-list {
+      max-height: 200px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .node-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .node-item:hover, .node-item.selected {
+      border-color: var(--primary);
+      background: #1e3a8a33;
+    }
+
+    .node-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge-entry {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .badge-path {
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Custom Leaflet Markers */
+    .custom-node-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: white;
+      font-weight: bold;
+      font-size: 11px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+      transition: transform 0.2s;
+    }
+
+    .custom-node-icon:hover {
+      transform: scale(1.25);
+    }
+
+    .icon-path {
+      background: #2563eb;
+      border: 2px solid #93c5fd;
+    }
+
+    .icon-entry {
+      background: #059669;
+      border: 2px solid #6ee7b7;
+    }
+
+    .icon-origin {
+      background: #d97706;
+      border: 3px solid #fde68a;
+      box-shadow: 0 0 15px #f59e0b;
+    }
+
+    .icon-selected {
+      border: 3px solid #f43f5e !important;
+      box-shadow: 0 0 15px #f43f5e !important;
+    }
+
+    .icon-locked {
+      outline: 2px dashed #f59e0b;
+    }
+
+    .heading-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 12px solid #10b981;
+      top: -14px;
+      left: calc(50% - 5px);
+      transform-origin: center 20px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 650px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    .code-preview {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #38bdf8;
+      max-height: 250px;
+      overflow: auto;
+      white-space: pre;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app-container">
+  <!-- Leaflet Map Container -->
+  <div id="map"></div>
+
+  <!-- Floating Top Control Bar -->
+  <div class="top-toolbar">
+    <div class="search-box">
+      <i data-lucide="search" style="width: 16px; color: #94a3b8;"></i>
+      <input type="text" id="search-input" placeholder="Cari lokasi kampus (UIKA Bogor)..." />
+    </div>
+
+    <!-- Tool Modes -->
+    <div class="mode-bar">
+      <button class="mode-btn active" id="btn-mode-path" onclick="setMode('path')" title="Klik peta untuk tambah waypoint koridor (Hotkey: P)">
+        <i data-lucide="map-pin" style="width: 14px;"></i> + Path Node
+      </button>
+      <button class="mode-btn" id="btn-mode-entry" onclick="setMode('entry')" title="Klik peta untuk tambah pintu ruangan (Hotkey: E)">
+        <i data-lucide="door-open" style="width: 14px;"></i> + Entry Node
+      </button>
+      <button class="mode-btn" id="btn-mode-link" onclick="setMode('link')" title="Hubungkan 2 titik untuk buat rute (Hotkey: L)">
+        <i data-lucide="share-2" style="width: 14px;"></i> Link Nodes
+      </button>
+      <button class="mode-btn" id="btn-mode-select" onclick="setMode('select')" title="Pilih / Geser / Edit Node (Hotkey: S)">
+        <i data-lucide="mouse-pointer" style="width: 14px;"></i> Select
+      </button>
+    </div>
+
+    <div style="display: flex; gap: 6px;">
+      <button class="btn btn-secondary" onclick="toggleAutoLink()" id="btn-autolink" title="Otomatis sambungkan node baru dengan node sebelumnya">
+        <i data-lucide="link" style="width: 14px;"></i> Auto-Link: <span id="autolink-status">ON</span>
+      </button>
+      <button class="btn btn-secondary" onclick="centerToNodes()" title="Fokus ke semua node yang ada">
+        <i data-lucide="crosshair" style="width: 14px;"></i> Fit View
+      </button>
+    </div>
+  </div>
+
+  <!-- Sidebar Inspector & Management -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2><i data-lucide="compass" style="color: #3b82f6;"></i> AR Graph Editor</h2>
+      <span style="font-size: 11px; background: #334155; padding: 3px 8px; border-radius: 12px; color: #94a3b8;">FESTU/UIKA</span>
+    </div>
+
+    <div class="sidebar-content">
+      <!-- Quick Stats -->
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-val" id="stat-total">0</div>
+          <div class="stat-label">Total Nodes</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-entries" style="color: #34d399;">0</div>
+          <div class="stat-label">Entries</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-links" style="color: #fbbf24;">0</div>
+          <div class="stat-label">Links</div>
+        </div>
+      </div>
+
+      <!-- Origin / Reference Settings -->
+      <div class="card">
+        <div class="card-title">
+          <span><i data-lucide="anchor" style="width: 14px; vertical-align: middle;"></i> Origin Point (0, 0, 0)</span>
+          <button class="btn btn-secondary" style="padding: 2px 6px; font-size: 11px;" onclick="setFirstEntryAsOrigin()">Auto-Set</button>
+        </div>
+        <div style="font-size: 11px; color: var(--text-muted);">
+          Semua koordinat (X, Y, Z) dalam AR dihitung relatif (meter) terhadap titik Origin ini.
+        </div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #cbd5e1; background: #0f172a; padding: 6px 10px; border-radius: 6px;" id="origin-display">
+          Origin: Belum ditentukan (Klik node & jadikan origin)
+        </div>
+      </div>
+
+      <!-- Node Properties Inspector -->
+      <div class="card" id="inspector-card">
+        <div class="card-title">
+          <span><i data-lucide="sliders" style="width: 14px; vertical-align: middle;"></i> Node Inspector</span>
+          <span id="selected-node-id" style="color: #38bdf8;">None Selected</span>
+        </div>
+
+        <div id="inspector-empty" style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">
+          Pilih atau klik salah satu node di peta untuk mengedit properti presisi.
+        </div>
+
+        <div id="inspector-form" style="display: none; flex-direction: column; gap: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border);">
+            <label style="font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="checkbox" id="edit-locked" onchange="toggleLockSelectedNode()" style="accent-color: #f59e0b;" />
+              <i data-lucide="lock" style="width: 13px; color: #f59e0b;"></i> Kunci Posisi (Lock)
+            </label>
+            <span style="font-size: 10px; color: var(--text-muted);">Cegah geser saat tarik jalur</span>
+          </div>
+
+          <div class="form-group">
+            <label>Tipe Node</label>
+            <select class="form-control" id="edit-type" onchange="updateSelectedNodeProperties()">
+              <option value="path">Path (Jalur / Waypoint)</option>
+              <option value="entry">Entry (Pintu Ruangan / Gedung)</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="group-entry-number">
+            <label>Nama / Label Ruangan (Entry Number)</label>
+            <input type="text" class="form-control" id="edit-number" placeholder="cth: REKTORAT, FIKES, Lab 101" oninput="updateSelectedNodeProperties()" />
+          </div>
+
+          <!-- Exact GPS Coordinates Input -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+            <div class="form-group">
+              <label>Latitude GPS (Presisi)</label>
+              <input type="number" step="0.000001" class="form-control" id="edit-lat" onchange="updateSelectedNodeGPS()" placeholder="-6.56194" />
+            </div>
+            <div class="form-group">
+              <label>Longitude GPS (Presisi)</label>
+              <input type="number" step="0.000001" class="form-control" id="edit-lng" onchange="updateSelectedNodeGPS()" placeholder="106.79194" />
+            </div>
+          </div>
+
+          <!-- AR Local Metric Coordinates -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
+            <div class="form-group">
+              <label>X (Meter)</label>
+              <input type="text" class="form-control" id="edit-x" readonly />
+            </div>
+            <div class="form-group">
+              <label>Y (Lantai/Tinggi)</label>
+              <input type="number" step="0.5" class="form-control" id="edit-y" value="0.0" oninput="updateSelectedNodeProperties()" />
+            </div>
+            <div class="form-group">
+              <label>Z (Meter)</label>
+              <input type="text" class="form-control" id="edit-z" readonly />
+            </div>
+          </div>
+
+          <div class="form-group" id="group-orientation">
+            <label>Arah Hadap Pintu (Forward Heading: <span id="angle-val">0</span>°)</label>
+            <input type="range" min="0" max="359" value="0" id="edit-angle" style="width: 100%; accent-color: #10b981;" oninput="updateSelectedNodeOrientation()" />
+            <div style="font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;" id="quaternion-display">
+              Quaternion: {x:0, y:0, z:0, w:1}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Neighbours (ID Terhubung)</label>
+            <input type="text" class="form-control" id="edit-neighbours" readonly style="color: #fbbf24;" />
+          </div>
+
+          <div style="display: flex; gap: 6px; margin-top: 6px;">
+            <button class="btn btn-secondary" style="flex: 1;" onclick="makeSelectedAsOrigin()">
+              <i data-lucide="anchor" style="width: 14px;"></i> Set as Origin
+            </button>
+            <button class="btn btn-danger" style="padding: 6px 10px;" onclick="deleteSelectedNode()">
+              <i data-lucide="trash-2" style="width: 14px;"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nodes List -->
+      <div class="card">
+        <div class="card-title">
+          <span>Daftar Node</span>
+          <span style="font-size: 11px; color: var(--text-muted);" id="nodes-count-label">0 nodes</span>
+        </div>
+        <div class="nodes-list" id="nodes-list-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Footer Actions -->
+    <div class="sidebar-footer">
+      <button class="btn btn-primary" style="justify-content: center;" onclick="showExportModal()">
+        <i data-lucide="download" style="width: 16px;"></i> Ekspor JSON / Firestore
+      </button>
+      <div style="display: flex; gap: 8px;">
+        <label class="btn btn-secondary" style="flex: 1; justify-content: center; cursor: pointer;" title="Import file JSON, CSV, KML (Avenza / EpiCollect5)">
+          <i data-lucide="upload" style="width: 14px;"></i> Import Data
+          <input type="file" id="import-file" accept=".json,.csv,.kml,.gpx" style="display: none;" onchange="importUniversalFile(event)" />
+        </label>
+        <button class="btn btn-secondary" style="flex: 1; justify-content: center;" onclick="clearAllData()">
+          <i data-lucide="refresh-cw" style="width: 14px;"></i> Reset
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Export Modal -->
+<div class="modal-overlay" id="export-modal">
+  <div class="modal-content">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h3 style="font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <i data-lucide="file-json" style="color: #38bdf8;"></i> Ekspor Data Node (Firestore DTO)
+      </h3>
+      <button class="btn-icon" onclick="closeExportModal()"><i data-lucide="x" style="width: 16px;"></i></button>
+    </div>
+
+    <p style="font-size: 12px; color: var(--text-muted);">
+      Data di bawah ini sudah dalam format <code>TreeNodeDto</code> yang siap disimpan ke koleksi Firestore <code>nodes</code> melalui seeder.
+    </p>
+
+    <div class="code-preview" id="export-json-code"></div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 8px;">
+      <button class="btn btn-secondary" onclick="copyJSON()">
+        <i data-lucide="copy" style="width: 14px;"></i> Salin JSON
+      </button>
+      <button class="btn btn-success" onclick="downloadJSONFile()">
+        <i data-lucide="download" style="width: 14px;"></i> Unduh nodes.json
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <i data-lucide="check-circle" style="width: 16px; color: #34d399;"></i>
+  <span id="toast-msg">Pesan toast</span>
+</div>
+
+<script>
+  // State variables
+  let currentMode = 'path'; // 'path' | 'entry' | 'link' | 'select'
+  let autoLink = true;
+  let nodes = []; // array of { id, lat, lng, x, y, z, type, number, neighbours: [], forwardVector: {x,y,z,w}, angle: 0, locked: false }
+  let nextId = 1;
+  let originNodeId = null;
+  let selectedNode = null;
+  let linkSourceNode = null;
+
+  // Leaflet map & layers
+  let map, markersGroup, linesGroup;
+
+  function initMap() {
+    const defaultLat = -6.56194;
+    const defaultLng = 106.79194;
+
+    map = L.map('map', {
+      center: [defaultLat, defaultLng],
+      zoom: 19,
+      maxZoom: 22,
+      zoomControl: false
+    });
+
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    // Map Tile Layers
+    const googleSatellite = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+      maxZoom: 22,
+      maxNativeZoom: 20,
+      attribution: '&copy; Google Maps'
+    });
+
+    const esriSatellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 22,
+      maxNativeZoom: 19,
+      attribution: '&copy; Esri World Imagery'
+    });
+
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 22,
+      maxNativeZoom: 19,
+      attribution: '&copy; OpenStreetMap'
+    });
+
+    googleSatellite.addTo(map);
+
+    const baseMaps = {
+      "Google Satellite / Hybrid": googleSatellite,
+      "Esri Satellite": esriSatellite,
+      "OpenStreetMap (Streets)": osm
+    };
+    L.control.layers(baseMaps, null, { position: 'bottomright' }).addTo(map);
+
+    markersGroup = L.layerGroup().addTo(map);
+    linesGroup = L.layerGroup().addTo(map);
+
+    map.on('click', handleMapClick);
+
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        searchLocation(searchInput.value);
+      }
+    });
+  }
+
+  function setMode(mode) {
+    currentMode = mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active', 'entry-mode', 'link-mode'));
+    const btn = document.getElementById(`btn-mode-${mode}`);
+    if (btn) {
+      btn.classList.add('active');
+      if (mode === 'entry') btn.classList.add('entry-mode');
+      if (mode === 'link') btn.classList.add('link-mode');
+    }
+
+    linkSourceNode = null;
+    showToast(`Mode aktif: ${mode.toUpperCase()}`);
+    renderMap();
+  }
+
+  function toggleAutoLink() {
+    autoLink = !autoLink;
+    document.getElementById('autolink-status').innerText = autoLink ? 'ON' : 'OFF';
+    document.getElementById('btn-autolink').style.borderColor = autoLink ? '#3b82f6' : 'var(--border)';
+    showToast(`Auto-link: ${autoLink ? 'Aktif' : 'Non-aktif'}`);
+  }
+
+  function handleMapClick(e) {
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+
+    if (currentMode === 'path' || currentMode === 'entry') {
+      addNodeAtLatLng(lat, lng, currentMode);
+    } else if (currentMode === 'select') {
+      selectNode(null);
+    }
+  }
+
+  function addNodeAtLatLng(lat, lng, type, customLabel = null) {
+    const id = nextId++;
+    let number = customLabel;
+    let forwardVector = null;
+    let angle = 0;
+
+    if (type === 'entry') {
+      number = number || `Ruang ${id}`;
+      angle = 0;
+      forwardVector = angleToQuaternion(0);
+    }
+
+    const newNode = {
+      id: id,
+      lat: lat,
+      lng: lng,
+      x: 0,
+      y: 0.0,
+      z: 0,
+      type: type,
+      number: number,
+      neighbours: [],
+      forwardVector: forwardVector,
+      angle: angle,
+      locked: false
+    };
+
+    if (nodes.length === 0 || originNodeId === null) {
+      originNodeId = id;
+    }
+
+    if (autoLink && nodes.length > 0) {
+      const prevNode = selectedNode || nodes[nodes.length - 1];
+      if (prevNode && prevNode.id !== id) {
+        newNode.neighbours.push(prevNode.id);
+        prevNode.neighbours.push(id);
+      }
+    }
+
+    nodes.push(newNode);
+    recalculateAllCoordinates();
+    selectNode(newNode);
+    renderMap();
+    updateUI();
+    showToast(`Node #${id} (${type}) berhasil ditambahkan`);
+  }
+
+  function angleToQuaternion(yawDegrees) {
+    const rad = (yawDegrees * Math.PI) / 180;
+    const halfRad = rad / 2;
+    return {
+      x: 0.0,
+      y: parseFloat(Math.sin(halfRad).toFixed(4)),
+      z: 0.0,
+      w: parseFloat(Math.cos(halfRad).toFixed(4))
+    };
+  }
+
+  function recalculateAllCoordinates() {
+    if (!originNodeId && nodes.length > 0) {
+      originNodeId = nodes[0].id;
+    }
+
+    const origin = nodes.find(n => n.id === originNodeId);
+    if (!origin) return;
+
+    const lat0 = origin.lat;
+    const lng0 = origin.lng;
+    const degToRad = Math.PI / 180;
+
+    nodes.forEach(node => {
+      const deltaLat = node.lat - lat0;
+      const deltaLng = node.lng - lng0;
+
+      const meterX = deltaLng * 111139 * Math.cos(lat0 * degToRad);
+      const meterZ = deltaLat * 111139;
+
+      node.x = parseFloat(meterX.toFixed(2));
+      node.z = parseFloat(meterZ.toFixed(2));
+    });
+  }
+
+  function renderMap() {
+    markersGroup.clearLayers();
+    linesGroup.clearLayers();
+
+    // 1. Draw Lines
+    const drawnPairs = new Set();
+    nodes.forEach(node => {
+      node.neighbours.forEach(nbrId => {
+        const target = nodes.find(n => n.id === nbrId);
+        if (target) {
+          const pairKey = [node.id, target.id].sort().join('-');
+          if (!drawnPairs.has(pairKey)) {
+            drawnPairs.add(pairKey);
+            const isSelectedLink = (selectedNode && (node.id === selectedNode.id || target.id === selectedNode.id));
+            L.polyline([[node.lat, node.lng], [target.lat, target.lng]], {
+              color: isSelectedLink ? '#f43f5e' : '#38bdf8',
+              weight: isSelectedLink ? 4 : 2.5,
+              opacity: 0.85,
+              dashArray: isSelectedLink ? null : '4, 4'
+            }).addTo(linesGroup);
+          }
+        }
+      });
+    });
+
+    // 2. Draw Markers
+    nodes.forEach(node => {
+      const isOrigin = (node.id === originNodeId);
+      const isSelected = (selectedNode && selectedNode.id === node.id);
+      const isLinkSource = (linkSourceNode && linkSourceNode.id === node.id);
+
+      let iconClass = node.type === 'entry' ? 'icon-entry' : 'icon-path';
+      if (isOrigin) iconClass = 'icon-origin';
+      if (isSelected || isLinkSource) iconClass += ' icon-selected';
+      if (node.locked) iconClass += ' icon-locked';
+
+      let arrowHtml = '';
+      if (node.type === 'entry') {
+        const angle = node.angle || 0;
+        arrowHtml = `<div class="heading-arrow" style="transform: rotate(${angle}deg);"></div>`;
+      }
+
+      const customIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `
+          <div class="custom-node-icon ${iconClass}" style="width: 26px; height: 26px; position: relative;">
+            ${arrowHtml}
+            ${node.type === 'entry' ? (node.number || node.id) : node.id}
+          </div>
+        `,
+        iconSize: [26, 26],
+        iconAnchor: [13, 13]
+      });
+
+      const marker = L.marker([node.lat, node.lng], {
+        icon: customIcon,
+        draggable: (currentMode === 'select' && !node.locked)
+      }).addTo(markersGroup);
+
+      marker.on('dragend', function (e) {
+        if (node.locked) return;
+        const newLatLng = e.target.getLatLng();
+        node.lat = newLatLng.lat;
+        node.lng = newLatLng.lng;
+        recalculateAllCoordinates();
+        renderMap();
+        updateUI();
+      });
+
+      marker.on('click', function (e) {
+        L.DomEvent.stopPropagation(e);
+        if (currentMode === 'link') {
+          handleLinkClick(node);
+        } else {
+          selectNode(node);
+        }
+      });
+    });
+  }
+
+  function handleLinkClick(node) {
+    if (!linkSourceNode) {
+      linkSourceNode = node;
+      showToast(`Pilih node kedua untuk disambungkan dengan Node #${node.id}`);
+      renderMap();
+    } else {
+      if (linkSourceNode.id === node.id) {
+        linkSourceNode = null;
+        showToast("Batal menyambung.");
+      } else {
+        const idx1 = linkSourceNode.neighbours.indexOf(node.id);
+        const idx2 = node.neighbours.indexOf(linkSourceNode.id);
+
+        if (idx1 === -1) {
+          linkSourceNode.neighbours.push(node.id);
+          if (idx2 === -1) node.neighbours.push(linkSourceNode.id);
+          showToast(`Terhubung: Node #${linkSourceNode.id} ⇄ Node #${node.id}`);
+        } else {
+          linkSourceNode.neighbours.splice(idx1, 1);
+          if (idx2 !== -1) node.neighbours.splice(idx2, 1);
+          showToast(`Hubungan diputus: Node #${linkSourceNode.id} ✕ Node #${node.id}`);
+        }
+        linkSourceNode = null;
+        renderMap();
+        updateUI();
+      }
+    }
+  }
+
+  function selectNode(node) {
+    selectedNode = node;
+    renderMap();
+    updateInspector();
+    updateNodesList();
+  }
+
+  function updateInspector() {
+    const emptyEl = document.getElementById('inspector-empty');
+    const formEl = document.getElementById('inspector-form');
+    const titleEl = document.getElementById('selected-node-id');
+
+    if (!selectedNode) {
+      emptyEl.style.display = 'block';
+      formEl.style.display = 'none';
+      titleEl.innerText = 'None Selected';
+      return;
+    }
+
+    emptyEl.style.display = 'none';
+    formEl.style.display = 'flex';
+    titleEl.innerText = `Node #${selectedNode.id} (${selectedNode.type.toUpperCase()})`;
+
+    document.getElementById('edit-locked').checked = !!selectedNode.locked;
+    document.getElementById('edit-type').value = selectedNode.type;
+    document.getElementById('edit-number').value = selectedNode.number || '';
+    document.getElementById('edit-lat').value = selectedNode.lat.toFixed(6);
+    document.getElementById('edit-lng').value = selectedNode.lng.toFixed(6);
+    document.getElementById('edit-x').value = selectedNode.x.toFixed(2);
+    document.getElementById('edit-y').value = selectedNode.y.toFixed(2);
+    document.getElementById('edit-z').value = selectedNode.z.toFixed(2);
+    document.getElementById('edit-angle').value = selectedNode.angle || 0;
+    document.getElementById('angle-val').innerText = selectedNode.angle || 0;
+    document.getElementById('edit-neighbours').value = selectedNode.neighbours.join(', ') || '(Tidak ada)';
+
+    const isEntry = selectedNode.type === 'entry';
+    document.getElementById('group-entry-number').style.display = isEntry ? 'flex' : 'none';
+    document.getElementById('group-orientation').style.display = isEntry ? 'flex' : 'none';
+
+    if (isEntry && selectedNode.forwardVector) {
+      document.getElementById('quaternion-display').innerText = 
+        `Quaternion: {x:${selectedNode.forwardVector.x}, y:${selectedNode.forwardVector.y}, z:${selectedNode.forwardVector.z}, w:${selectedNode.forwardVector.w}}`;
+    }
+  }
+
+  function updateSelectedNodeGPS() {
+    if (!selectedNode) return;
+    const lat = parseFloat(document.getElementById('edit-lat').value);
+    const lng = parseFloat(document.getElementById('edit-lng').value);
+    if (!isNaN(lat) && !isNaN(lng)) {
+      selectedNode.lat = lat;
+      selectedNode.lng = lng;
+      recalculateAllCoordinates();
+      renderMap();
+      updateInspector();
+      updateUI();
+      showToast(`Koordinat GPS Node #${selectedNode.id} diperbarui`);
+    }
+  }
+
+  function toggleLockSelectedNode() {
+    if (!selectedNode) return;
+    selectedNode.locked = document.getElementById('edit-locked').checked;
+    renderMap();
+    showToast(selectedNode.locked ? `Node #${selectedNode.id} terkunci` : `Node #${selectedNode.id} tidak terkunci`);
+  }
+
+  function updateSelectedNodeProperties() {
+    if (!selectedNode) return;
+
+    selectedNode.type = document.getElementById('edit-type').value;
+    selectedNode.number = document.getElementById('edit-number').value || null;
+    selectedNode.y = parseFloat(document.getElementById('edit-y').value) || 0.0;
+
+    if (selectedNode.type === 'entry' && !selectedNode.forwardVector) {
+      selectedNode.angle = 0;
+      selectedNode.forwardVector = angleToQuaternion(0);
+    }
+
+    renderMap();
+    updateInspector();
+    updateUI();
+  }
+
+  function updateSelectedNodeOrientation() {
+    if (!selectedNode || selectedNode.type !== 'entry') return;
+    const angle = parseInt(document.getElementById('edit-angle').value, 10);
+    selectedNode.angle = angle;
+    selectedNode.forwardVector = angleToQuaternion(angle);
+    document.getElementById('angle-val').innerText = angle;
+    document.getElementById('quaternion-display').innerText = 
+      `Quaternion: {x:${selectedNode.forwardVector.x}, y:${selectedNode.forwardVector.y}, z:${selectedNode.forwardVector.z}, w:${selectedNode.forwardVector.w}}`;
+    renderMap();
+  }
+
+  function makeSelectedAsOrigin() {
+    if (!selectedNode) return;
+    originNodeId = selectedNode.id;
+    recalculateAllCoordinates();
+    renderMap();
+    updateInspector();
+    updateUI();
+    showToast(`Node #${selectedNode.id} ditetapkan sebagai titik Origin (0,0,0)`);
+  }
+
+  function setFirstEntryAsOrigin() {
+    const firstEntry = nodes.find(n => n.type === 'entry') || nodes[0];
+    if (firstEntry) {
+      originNodeId = firstEntry.id;
+      recalculateAllCoordinates();
+      renderMap();
+      updateInspector();
+      updateUI();
+      showToast(`Origin diset ke Node #${firstEntry.id}`);
+    }
+  }
+
+  function deleteSelectedNode() {
+    if (!selectedNode) return;
+    const delId = selectedNode.id;
+
+    nodes.forEach(n => {
+      n.neighbours = n.neighbours.filter(nid => nid !== delId);
+    });
+
+    nodes = nodes.filter(n => n.id !== delId);
+
+    if (originNodeId === delId) {
+      originNodeId = nodes.length > 0 ? nodes[0].id : null;
+    }
+
+    selectedNode = null;
+    recalculateAllCoordinates();
+    renderMap();
+    updateInspector();
+    updateUI();
+    showToast(`Node #${delId} telah dihapus.`);
+  }
+
+  function updateUI() {
+    const total = nodes.length;
+    const entries = nodes.filter(n => n.type === 'entry').length;
+    let linksCount = 0;
+    nodes.forEach(n => linksCount += n.neighbours.length);
+    linksCount = Math.floor(linksCount / 2);
+
+    document.getElementById('stat-total').innerText = total;
+    document.getElementById('stat-entries').innerText = entries;
+    document.getElementById('stat-links').innerText = linksCount;
+    document.getElementById('nodes-count-label').innerText = `${total} nodes`;
+
+    const origin = nodes.find(n => n.id === originNodeId);
+    if (origin) {
+      document.getElementById('origin-display').innerHTML = 
+        `Origin: <b>Node #${origin.id}</b> (${origin.type === 'entry' ? origin.number : 'Path'}) [${origin.lat.toFixed(5)}, ${origin.lng.toFixed(5)}]`;
+    } else {
+      document.getElementById('origin-display').innerText = 'Origin: Belum ditentukan';
+    }
+
+    updateNodesList();
+  }
+
+  function updateNodesList() {
+    const container = document.getElementById('nodes-list-container');
+    container.innerHTML = '';
+
+    if (nodes.length === 0) {
+      container.innerHTML = '<div style="font-size: 11px; color: var(--text-muted); text-align: center; padding: 10px;">Belum ada node yang dibuat.</div>';
+      return;
+    }
+
+    nodes.forEach(node => {
+      const item = document.createElement('div');
+      item.className = `node-item ${selectedNode && selectedNode.id === node.id ? 'selected' : ''}`;
+      
+      const badgeClass = node.type === 'entry' ? 'badge-entry' : 'badge-path';
+      const labelText = node.type === 'entry' ? (node.number || 'Entry') : 'Path';
+
+      item.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 700; color: #fff;">#${node.id}</span>
+          <span class="node-badge ${badgeClass}">${labelText}</span>
+          ${node.locked ? '<i data-lucide="lock" style="width: 10px; color: #f59e0b;"></i>' : ''}
+        </div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted);">
+          (${node.x}m, ${node.z}m)
+        </div>
+      `;
+
+      item.onclick = () => {
+        selectNode(node);
+        map.panTo([node.lat, node.lng]);
+      };
+
+      container.appendChild(item);
+    });
+    lucide.createIcons();
+  }
+
+  function centerToNodes() {
+    if (nodes.length === 0) return;
+    const group = new L.featureGroup(nodes.map(n => L.marker([n.lat, n.lng])));
+    map.fitBounds(group.getBounds().pad(0.2));
+  }
+
+  async function searchLocation(query) {
+    if (!query) return;
+    showToast(`Mencari "${query}"...`);
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      if (data && data.length > 0) {
+        const lat = parseFloat(data[0].lat);
+        const lon = parseFloat(data[0].lon);
+        map.setView([lat, lon], 19);
+        showToast(`Lokasi ditemukan: ${data[0].display_name.split(',')[0]}`);
+      } else {
+        showToast("Lokasi tidak ditemukan.");
+      }
+    } catch (e) {
+      showToast("Gagal melakukan pencarian.");
+    }
+  }
+
+  function generateFirestoreNodesDTO() {
+    return nodes.map(n => {
+      const dto = {
+        id: n.id,
+        x: n.x,
+        y: n.y,
+        z: n.z,
+        type: n.type,
+        number: n.type === 'entry' ? n.number : null,
+        neighbours: n.neighbours
+      };
+      if (n.type === 'entry' && n.forwardVector) {
+        dto.forwardVector = n.forwardVector;
+      }
+      return dto;
+    });
+  }
+
+  function showExportModal() {
+    const dto = generateFirestoreNodesDTO();
+    document.getElementById('export-json-code').innerText = JSON.stringify(dto, null, 2);
+    document.getElementById('export-modal').style.display = 'flex';
+  }
+
+  function closeExportModal() {
+    document.getElementById('export-modal').style.display = 'none';
+  }
+
+  function copyJSON() {
+    const code = document.getElementById('export-json-code').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      showToast("JSON berhasil disalin ke clipboard!");
+    });
+  }
+
+  function downloadJSONFile() {
+    const dto = generateFirestoreNodesDTO();
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dto, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "nodes.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+    showToast("File nodes.json berhasil diunduh!");
+  }
+
+  // Universal Importer (JSON, CSV from Avenza/EpiCollect5, KML)
+  function importUniversalFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const fileName = file.name.toLowerCase();
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      try {
+        const content = e.target.result;
+        if (fileName.endsWith('.json')) {
+          importJSONContent(content);
+        } else if (fileName.endsWith('.csv')) {
+          importCSVContent(content);
+        } else if (fileName.endsWith('.kml')) {
+          importKMLContent(content);
+        } else {
+          // Try JSON first then CSV
+          try {
+            importJSONContent(content);
+          } catch (_) {
+            importCSVContent(content);
+          }
+        }
+      } catch (err) {
+        alert("Gagal membaca file: " + err.message);
+      }
+    };
+
+    reader.readAsText(file);
+  }
+
+  function importJSONContent(jsonString) {
+    const importedData = JSON.parse(jsonString);
+    if (!Array.isArray(importedData)) {
+      throw new Error("Format JSON harus berupa Array of TreeNodeDto");
+    }
+
+    const center = map.getCenter();
+    const lat0 = center.lat;
+    const lng0 = center.lng;
+    const degToRad = Math.PI / 180;
+
+    nodes = importedData.map(item => {
+      const lat = item.lat || (lat0 + (item.z / 111139));
+      const lng = item.lng || (lng0 + (item.x / (111139 * Math.cos(lat0 * degToRad))));
+
+      let angle = 0;
+      if (item.forwardVector && item.forwardVector.y !== undefined) {
+        angle = Math.round((2 * Math.asin(item.forwardVector.y) * 180) / Math.PI);
+        if (angle < 0) angle += 360;
+      }
+
+      return {
+        id: item.id,
+        lat: lat,
+        lng: lng,
+        x: item.x || 0,
+        y: item.y || 0,
+        z: item.z || 0,
+        type: item.type || 'path',
+        number: item.number || null,
+        neighbours: item.neighbours || [],
+        forwardVector: item.forwardVector || null,
+        angle: angle,
+        locked: !!item.locked
+      };
+    });
+
+    finishImport(`Berhasil mengimpor ${nodes.length} nodes dari JSON!`);
+  }
+
+  // Parser untuk CSV dari Avenza Maps atau EpiCollect5
+  function importCSVContent(csvText) {
+    const lines = csvText.trim().split(/\r?\n/);
+    if (lines.length < 2) throw new Error("File CSV kosong atau tidak memiliki header.");
+
+    const header = lines[0].toLowerCase().split(/,|;/).map(h => h.trim().replace(/^["']|["']$/g, ''));
+    
+    // Find lat/lng columns (Supports EpiCollect5, Avenza, and standard CSV)
+    const latIdx = header.findIndex(h => h.includes('lat') || h.includes('latitude') || h.includes('y'));
+    const lngIdx = header.findIndex(h => h.includes('long') || h.includes('lon') || h.includes('lng') || h.includes('longitude') || h.includes('x'));
+    const nameIdx = header.findIndex(h => h === 'title' || h.includes('title') || h.includes('name') || h.includes('label') || h.includes('nama') || h.includes('ruang') || h.includes('gedung'));
+    const typeIdx = header.findIndex(h => h.includes('type') || h.includes('tipe') || h.includes('kategori'));
+
+    if (latIdx === -1 || lngIdx === -1) {
+      throw new Error("Kolom Latitude / Longitude tidak ditemukan di file CSV!");
+    }
+
+    const newNodes = [];
+    for (let i = 1; i < lines.length; i++) {
+      const row = lines[i].split(/,|;/).map(r => r.trim().replace(/^["']|["']$/g, ''));
+      if (row.length <= Math.max(latIdx, lngIdx)) continue;
+
+      const lat = parseFloat(row[latIdx]);
+      const lng = parseFloat(row[lngIdx]);
+      if (isNaN(lat) || isNaN(lng)) continue;
+
+      const label = (nameIdx !== -1 && row[nameIdx]) ? row[nameIdx] : null;
+      let type = (typeIdx !== -1 && row[typeIdx]) ? row[typeIdx].toLowerCase() : 'path';
+
+      // Auto detect entry if label exists or matches building names
+      if (label && label.length > 0 && !label.toLowerCase().startsWith('path') && !label.toLowerCase().startsWith('node')) {
+        type = 'entry';
+      }
+
+      const id = i;
+      newNodes.push({
+        id: id,
+        lat: lat,
+        lng: lng,
+        x: 0,
+        y: 0.0,
+        z: 0,
+        type: type === 'entry' ? 'entry' : 'path',
+        number: type === 'entry' ? label : null,
+        neighbours: [],
+        forwardVector: type === 'entry' ? angleToQuaternion(0) : null,
+        angle: 0,
+        locked: true // CSV points are locked by default
+      });
+    }
+
+    if (newNodes.length === 0) throw new Error("Tidak ada baris koordinat yang valid dalam CSV.");
+
+    nodes = newNodes;
+    finishImport(`Berhasil mengimpor ${nodes.length} titik koordinat dari CSV (Avenza/EpiCollect)!`);
+  }
+
+  // Parser untuk KML dari Avenza Maps
+  function importKMLContent(kmlText) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(kmlText, "text/xml");
+    const placemarks = xmlDoc.getElementsByTagName("Placemark");
+
+    if (placemarks.length === 0) throw new Error("Tidak ada Placemark yang ditemukan dalam file KML.");
+
+    const newNodes = [];
+    for (let i = 0; i < placemarks.length; i++) {
+      const pm = placemarks[i];
+      const nameEl = pm.getElementsByTagName("name")[0];
+      const coordEl = pm.getElementsByTagName("coordinates")[0];
+
+      if (!coordEl) continue;
+      const coords = coordEl.textContent.trim().split(",");
+      const lng = parseFloat(coords[0]);
+      const lat = parseFloat(coords[1]);
+      if (isNaN(lat) || isNaN(lng)) continue;
+
+      const label = nameEl ? nameEl.textContent.trim() : `Point ${i + 1}`;
+      let type = 'path';
+      if (label && !label.toLowerCase().startsWith('path') && !label.toLowerCase().startsWith('point') && !label.toLowerCase().startsWith('node')) {
+        type = 'entry';
+      }
+
+      const id = i + 1;
+      newNodes.push({
+        id: id,
+        lat: lat,
+        lng: lng,
+        x: 0,
+        y: 0.0,
+        z: 0,
+        type: type,
+        number: type === 'entry' ? label : null,
+        neighbours: [],
+        forwardVector: type === 'entry' ? angleToQuaternion(0) : null,
+        angle: 0,
+        locked: true
+      });
+    }
+
+    nodes = newNodes;
+    finishImport(`Berhasil mengimpor ${nodes.length} waypoints dari KML (Avenza)!`);
+  }
+
+  function finishImport(msg) {
+    nextId = Math.max(...nodes.map(n => n.id), 0) + 1;
+    originNodeId = nodes.length > 0 ? nodes[0].id : null;
+    recalculateAllCoordinates();
+    renderMap();
+    centerToNodes();
+    updateUI();
+    showToast(msg);
+  }
+
+  function clearAllData() {
+    if (confirm("Apakah Anda yakin ingin menghapus semua node?")) {
+      nodes = [];
+      nextId = 1;
+      originNodeId = null;
+      selectedNode = null;
+      linkSourceNode = null;
+      renderMap();
+      updateInspector();
+      updateUI();
+      showToast("Semua node telah dibersihkan.");
+    }
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toast-msg').innerText = msg;
+    toast.style.display = 'flex';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 2800);
+  }
+
+  // Keyboard Shortcuts
+  window.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+    if (e.key === 'p' || e.key === 'P') setMode('path');
+    if (e.key === 'e' || e.key === 'E') setMode('entry');
+    if (e.key === 'l' || e.key === 'L') setMode('link');
+    if (e.key === 's' || e.key === 'S') setMode('select');
+    if (e.key === 'Delete' || e.key === 'Backspace') deleteSelectedNode();
+    if (e.key === 'Escape') {
+      selectNode(null);
+      linkSourceNode = null;
+      renderMap();
+    }
+  });
+
+  window.onload = () => {
+    initMap();
+    lucide.createIcons();
+    updateUI();
+  };
+</script>
+</body>
+</html>

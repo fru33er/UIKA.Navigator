@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp"
+    tools:context=".presentation.orientating.OrientationFragment">
+
+    <!-- Illustration -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_hand_phone"
+        app:tint="@color/green_primary" />
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:text="Orientasi Kamera"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp" />
+
+    <!-- Card Instruction -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/surface_white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        app:strokeColor="@color/divider_color"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_light"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.4"
+                android:text="@string/orientate"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Gold accent bar -->
+    <View
+        android:layout_width="60dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/gold_accent" />
+
+</LinearLayout>

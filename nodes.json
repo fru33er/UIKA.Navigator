@@ -1,0 +1,1748 @@
+[
+  {
+    "id": 1,
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      60,
+      59
+    ]
+  },
+  {
+    "id": 2,
+    "x": -5.41,
+    "y": 0,
+    "z": -5,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      4
+    ]
+  },
+  {
+    "id": 3,
+    "x": -4.86,
+    "y": 0,
+    "z": -5,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      60
+    ]
+  },
+  {
+    "id": 4,
+    "x": -9.83,
+    "y": 0,
+    "z": -7.11,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      2,
+      5
+    ]
+  },
+  {
+    "id": 5,
+    "x": -13.8,
+    "y": 0,
+    "z": -7.45,
+    "type": "entry",
+    "number": "RISE",
+    "neighbours": [
+      4,
+      6
+    ],
+    "forwardVector": {
+      "x": 0,
+      "y": 0.6756,
+      "z": 0,
+      "w": -0.7373
+    }
+  },
+  {
+    "id": 6,
+    "x": -17,
+    "y": 0,
+    "z": -4.11,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      5,
+      7
+    ]
+  },
+  {
+    "id": 7,
+    "x": -14.8,
+    "y": 0,
+    "z": 1.11,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      6,
+      8
+    ]
+  },
+  {
+    "id": 8,
+    "x": -17.89,
+    "y": 0,
+    "z": 1.67,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      7,
+      9
+    ]
+  },
+  {
+    "id": 9,
+    "x": -21.53,
+    "y": 0,
+    "z": 3.67,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      8,
+      10
+    ]
+  },
+  {
+    "id": 10,
+    "x": -24.51,
+    "y": 0,
+    "z": 5.56,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      9,
+      11
+    ]
+  },
+  {
+    "id": 11,
+    "x": -28.93,
+    "y": 0,
+    "z": 4,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      10,
+      12
+    ]
+  },
+  {
+    "id": 12,
+    "x": -34.67,
+    "y": 0,
+    "z": 5.33,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      11,
+      13
+    ]
+  },
+  {
+    "id": 13,
+    "x": -41.63,
+    "y": 0,
+    "z": 7,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      14,
+      12
+    ]
+  },
+  {
+    "id": 14,
+    "x": -44.94,
+    "y": 0,
+    "z": 7.22,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      13,
+      15
+    ]
+  },
+  {
+    "id": 15,
+    "x": -50.68,
+    "y": 0,
+    "z": 8.34,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      14,
+      16
+    ]
+  },
+  {
+    "id": 16,
+    "x": -53.44,
+    "y": 0,
+    "z": 8.89,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      15,
+      17
+    ]
+  },
+  {
+    "id": 17,
+    "x": -53.22,
+    "y": 0,
+    "z": 13.89,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      16,
+      18
+    ]
+  },
+  {
+    "id": 18,
+    "x": -53.22,
+    "y": 0,
+    "z": 16.45,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      17,
+      19
+    ]
+  },
+  {
+    "id": 19,
+    "x": -54.32,
+    "y": 0,
+    "z": 22.56,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      18,
+      20
+    ]
+  },
+  {
+    "id": 20,
+    "x": -55.21,
+    "y": 0,
+    "z": 28.67,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      19,
+      21
+    ]
+  },
+  {
+    "id": 21,
+    "x": -54.13,
+    "y": 0,
+    "z": 35.15,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      20,
+      22
+    ]
+  },
+  {
+    "id": 22,
+    "x": -53.39,
+    "y": 0,
+    "z": 39.56,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      21,
+      23
+    ]
+  },
+  {
+    "id": 23,
+    "x": -53.72,
+    "y": 0,
+    "z": 44.85,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      22,
+      24
+    ]
+  },
+  {
+    "id": 24,
+    "x": -54.32,
+    "y": 0,
+    "z": 51.24,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      23,
+      25
+    ]
+  },
+  {
+    "id": 25,
+    "x": -54.87,
+    "y": 0,
+    "z": 56.24,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      24,
+      26
+    ]
+  },
+  {
+    "id": 26,
+    "x": -54.87,
+    "y": 0,
+    "z": 59.62,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      25,
+      27
+    ]
+  },
+  {
+    "id": 27,
+    "x": -55.21,
+    "y": 0,
+    "z": 62.24,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      26,
+      28,
+      34
+    ]
+  },
+  {
+    "id": 28,
+    "x": -56.31,
+    "y": 0,
+    "z": 62.24,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      27,
+      29
+    ]
+  },
+  {
+    "id": 29,
+    "x": -59.68,
+    "y": 0,
+    "z": 62.18,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      28,
+      33
+    ]
+  },
+  {
+    "id": 30,
+    "x": -65.57,
+    "y": 0,
+    "z": 62.1,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      31,
+      33
+    ]
+  },
+  {
+    "id": 31,
+    "x": -69.01,
+    "y": 0,
+    "z": 61.81,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      30,
+      32
+    ]
+  },
+  {
+    "id": 32,
+    "x": -73.42,
+    "y": 0,
+    "z": 61.24,
+    "type": "entry",
+    "number": "FIKES",
+    "neighbours": [
+      31
+    ],
+    "forwardVector": {
+      "x": 0,
+      "y": 0.7314,
+      "z": 0,
+      "w": -0.682
+    }
+  },
+  {
+    "id": 33,
+    "x": -62.39,
+    "y": 0,
+    "z": 62.33,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      29,
+      30
+    ]
+  },
+  {
+    "id": 34,
+    "x": -48.36,
+    "y": 0,
+    "z": 70.13,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      27,
+      35
+    ]
+  },
+  {
+    "id": 35,
+    "x": -42.4,
+    "y": 0,
+    "z": 74.8,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      34,
+      36
+    ]
+  },
+  {
+    "id": 36,
+    "x": -36.66,
+    "y": 0,
+    "z": 79.35,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      35,
+      37,
+      43
+    ]
+  },
+  {
+    "id": 37,
+    "x": -34.51,
+    "y": 0,
+    "z": 83.43,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      36,
+      38
+    ]
+  },
+  {
+    "id": 38,
+    "x": -33.03,
+    "y": 0,
+    "z": 90.13,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      37,
+      39
+    ]
+  },
+  {
+    "id": 39,
+    "x": -28.38,
+    "y": 0,
+    "z": 91.02,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      38,
+      40
+    ]
+  },
+  {
+    "id": 40,
+    "x": -27.27,
+    "y": 0,
+    "z": 88.58,
+    "type": "entry",
+    "number": "FAI",
+    "neighbours": [
+      39,
+      41
+    ],
+    "forwardVector": {
+      "x": 0,
+      "y": 0.7547,
+      "z": 0,
+      "w": 0.6561
+    }
+  },
+  {
+    "id": 41,
+    "x": -25.33,
+    "y": 0,
+    "z": 79.58,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      40,
+      42
+    ]
+  },
+  {
+    "id": 42,
+    "x": -29,
+    "y": 0,
+    "z": 74.13,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      41,
+      43,
+      44
+    ]
+  },
+  {
+    "id": 43,
+    "x": -32.4,
+    "y": 0,
+    "z": 76.06,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      42,
+      36
+    ]
+  },
+  {
+    "id": 44,
+    "x": -25.62,
+    "y": 0,
+    "z": 73.13,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      42,
+      45
+    ]
+  },
+  {
+    "id": 45,
+    "x": -16.56,
+    "y": 0,
+    "z": 72.46,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      44,
+      46
+    ]
+  },
+  {
+    "id": 46,
+    "x": -10.93,
+    "y": 0,
+    "z": 72.02,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      45,
+      47
+    ]
+  },
+  {
+    "id": 47,
+    "x": -2.56,
+    "y": 0,
+    "z": 71.17,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      46,
+      48
+    ]
+  },
+  {
+    "id": 48,
+    "x": 2.54,
+    "y": 0,
+    "z": 65.24,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      47,
+      49
+    ]
+  },
+  {
+    "id": 49,
+    "x": 2.21,
+    "y": 0,
+    "z": 60.79,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      50,
+      48
+    ]
+  },
+  {
+    "id": 50,
+    "x": 4.86,
+    "y": 0,
+    "z": 55.57,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      49,
+      51
+    ]
+  },
+  {
+    "id": 51,
+    "x": 5.74,
+    "y": 0,
+    "z": 48.01,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      50,
+      52
+    ]
+  },
+  {
+    "id": 52,
+    "x": 5.74,
+    "y": 0,
+    "z": 44.34,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      51,
+      53
+    ]
+  },
+  {
+    "id": 53,
+    "x": 5.52,
+    "y": 0,
+    "z": 34.79,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      52,
+      54
+    ]
+  },
+  {
+    "id": 54,
+    "x": 7.4,
+    "y": 0,
+    "z": 26.12,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      53,
+      57
+    ]
+  },
+  {
+    "id": 56,
+    "x": 7.84,
+    "y": 0,
+    "z": 17.56,
+    "type": "entry",
+    "number": "PASCASARJANA",
+    "neighbours": [
+      58,
+      57
+    ],
+    "forwardVector": {
+      "x": 0,
+      "y": 0.766,
+      "z": 0,
+      "w": 0.6428
+    }
+  },
+  {
+    "id": 57,
+    "x": 7.62,
+    "y": 0,
+    "z": 19,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      54,
+      56
+    ]
+  },
+  {
+    "id": 58,
+    "x": 1.1,
+    "y": 0,
+    "z": 10.34,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      56,
+      59
+    ]
+  },
+  {
+    "id": 59,
+    "x": 1.21,
+    "y": 0,
+    "z": 7,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      58,
+      1
+    ]
+  },
+  {
+    "id": 60,
+    "x": -1.32,
+    "y": 0,
+    "z": -2.45,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      1,
+      3,
+      61
+    ]
+  },
+  {
+    "id": 61,
+    "x": -3.86,
+    "y": 0,
+    "z": -9.45,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      60,
+      62
+    ]
+  },
+  {
+    "id": 62,
+    "x": -1.64,
+    "y": 0,
+    "z": -10.23,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      63,
+      61
+    ]
+  },
+  {
+    "id": 63,
+    "x": 0.77,
+    "y": 0,
+    "z": -10.89,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      62,
+      64
+    ]
+  },
+  {
+    "id": 64,
+    "x": 8.83,
+    "y": 0,
+    "z": -12,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      63,
+      65
+    ]
+  },
+  {
+    "id": 65,
+    "x": 11.7,
+    "y": 0,
+    "z": -13.34,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      64,
+      66
+    ]
+  },
+  {
+    "id": 66,
+    "x": 17.91,
+    "y": 0,
+    "z": -14.97,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      65,
+      67
+    ]
+  },
+  {
+    "id": 67,
+    "x": 23.52,
+    "y": 0,
+    "z": -17.45,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      66,
+      68
+    ]
+  },
+  {
+    "id": 68,
+    "x": 30.09,
+    "y": 0,
+    "z": -18.26,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      67,
+      69
+    ]
+  },
+  {
+    "id": 69,
+    "x": 36.31,
+    "y": 0,
+    "z": -19.6,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      68,
+      70
+    ]
+  },
+  {
+    "id": 70,
+    "x": 40.9,
+    "y": 0,
+    "z": -21.37,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      69,
+      71
+    ]
+  },
+  {
+    "id": 71,
+    "x": 40.75,
+    "y": 0,
+    "z": -28.26,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      70,
+      72
+    ]
+  },
+  {
+    "id": 72,
+    "x": 39.86,
+    "y": 0,
+    "z": -36.23,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      71,
+      73
+    ]
+  },
+  {
+    "id": 73,
+    "x": 36.77,
+    "y": 0,
+    "z": -46.68,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      72,
+      74
+    ]
+  },
+  {
+    "id": 74,
+    "x": 34.01,
+    "y": 0,
+    "z": -52.9,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      73,
+      75
+    ]
+  },
+  {
+    "id": 75,
+    "x": 33.34,
+    "y": 0,
+    "z": -60.91,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      74,
+      76,
+      78
+    ]
+  },
+  {
+    "id": 76,
+    "x": 31.69,
+    "y": 0,
+    "z": -60.57,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      75,
+      77
+    ]
+  },
+  {
+    "id": 77,
+    "x": 29.15,
+    "y": 0,
+    "z": -59.9,
+    "type": "entry",
+    "number": "77",
+    "neighbours": [
+      76
+    ],
+    "forwardVector": {
+      "x": 0,
+      "y": 0.1219,
+      "z": 0,
+      "w": 0.9925
+    }
+  },
+  {
+    "id": 78,
+    "x": 32.57,
+    "y": 0,
+    "z": -64.79,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      75,
+      79
+    ]
+  },
+  {
+    "id": 79,
+    "x": 29.15,
+    "y": 0,
+    "z": -69.35,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      78,
+      80
+    ]
+  },
+  {
+    "id": 80,
+    "x": 29.26,
+    "y": 0,
+    "z": -74.57,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      79,
+      81
+    ]
+  },
+  {
+    "id": 81,
+    "x": 30.36,
+    "y": 0,
+    "z": -82.69,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      80,
+      82
+    ]
+  },
+  {
+    "id": 82,
+    "x": 21.31,
+    "y": 0,
+    "z": -86.91,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      81,
+      83
+    ]
+  },
+  {
+    "id": 83,
+    "x": 11.43,
+    "y": 0,
+    "z": -85.27,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      82,
+      84
+    ]
+  },
+  {
+    "id": 84,
+    "x": 0.69,
+    "y": 0,
+    "z": -84.75,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      83,
+      85
+    ]
+  },
+  {
+    "id": 85,
+    "x": -6.18,
+    "y": 0,
+    "z": -93.25,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      84,
+      86
+    ]
+  },
+  {
+    "id": 86,
+    "x": -5.96,
+    "y": 0,
+    "z": -99.14,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      85,
+      87
+    ]
+  },
+  {
+    "id": 87,
+    "x": -6.07,
+    "y": 0,
+    "z": -105.03,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      86,
+      88
+    ]
+  },
+  {
+    "id": 88,
+    "x": -9.27,
+    "y": 0,
+    "z": -117.25,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      87,
+      89
+    ]
+  },
+  {
+    "id": 89,
+    "x": -12.15,
+    "y": 0,
+    "z": -125.36,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      88,
+      90
+    ]
+  },
+  {
+    "id": 90,
+    "x": -13.37,
+    "y": 0,
+    "z": -129.28,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      89,
+      91
+    ]
+  },
+  {
+    "id": 91,
+    "x": -15.85,
+    "y": 0,
+    "z": -135.72,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      90,
+      92
+    ]
+  },
+  {
+    "id": 92,
+    "x": -21.97,
+    "y": 0,
+    "z": -138.03,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      91,
+      93
+    ]
+  },
+  {
+    "id": 93,
+    "x": -34.01,
+    "y": 0,
+    "z": -145.26,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      92,
+      94
+    ]
+  },
+  {
+    "id": 94,
+    "x": -39.09,
+    "y": 0,
+    "z": -146.7,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      93,
+      95
+    ]
+  },
+  {
+    "id": 95,
+    "x": -47.04,
+    "y": 0,
+    "z": -149.15,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      94,
+      96
+    ]
+  },
+  {
+    "id": 96,
+    "x": -49.57,
+    "y": 0,
+    "z": -149.93,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      95,
+      97
+    ]
+  },
+  {
+    "id": 97,
+    "x": -55.1,
+    "y": 0,
+    "z": -151.82,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      96,
+      98
+    ]
+  },
+  {
+    "id": 98,
+    "x": -59.51,
+    "y": 0,
+    "z": -154.82,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      97,
+      99
+    ]
+  },
+  {
+    "id": 99,
+    "x": -71.88,
+    "y": 0,
+    "z": -159.6,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      98,
+      100
+    ]
+  },
+  {
+    "id": 100,
+    "x": -82.59,
+    "y": 0,
+    "z": -165.6,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      99,
+      101
+    ]
+  },
+  {
+    "id": 101,
+    "x": -88.56,
+    "y": 0,
+    "z": -169.26,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      100,
+      102
+    ]
+  },
+  {
+    "id": 102,
+    "x": -90.21,
+    "y": 0,
+    "z": -174.6,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      101,
+      103
+    ]
+  },
+  {
+    "id": 103,
+    "x": -92.08,
+    "y": 0,
+    "z": -183.27,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      102,
+      104
+    ]
+  },
+  {
+    "id": 104,
+    "x": -96,
+    "y": 0,
+    "z": -188.84,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      103,
+      105
+    ]
+  },
+  {
+    "id": 105,
+    "x": -99.59,
+    "y": 0,
+    "z": -196.05,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      104,
+      106
+    ]
+  },
+  {
+    "id": 106,
+    "x": -100.36,
+    "y": 0,
+    "z": -205.27,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      105,
+      107,
+      113
+    ]
+  },
+  {
+    "id": 107,
+    "x": -101.8,
+    "y": 0,
+    "z": -212.39,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      106,
+      108
+    ]
+  },
+  {
+    "id": 108,
+    "x": -96.17,
+    "y": 0,
+    "z": -215.39,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      107,
+      109
+    ]
+  },
+  {
+    "id": 109,
+    "x": -90.87,
+    "y": 0,
+    "z": -219.39,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      108,
+      110
+    ]
+  },
+  {
+    "id": 110,
+    "x": -88,
+    "y": 0,
+    "z": -221.94,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      109,
+      111
+    ]
+  },
+  {
+    "id": 111,
+    "x": -84.35,
+    "y": 0,
+    "z": -225.28,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      110,
+      112
+    ]
+  },
+  {
+    "id": 112,
+    "x": -83.47,
+    "y": 0,
+    "z": -225.72,
+    "type": "entry",
+    "number": "MASJID",
+    "neighbours": [
+      111
+    ],
+    "forwardVector": {
+      "x": 0,
+      "y": 0.1478,
+      "z": 0,
+      "w": 0.989
+    }
+  },
+  {
+    "id": 113,
+    "x": -106.33,
+    "y": 0,
+    "z": -201.5,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      106,
+      114
+    ]
+  },
+  {
+    "id": 114,
+    "x": -110.03,
+    "y": 0,
+    "z": -198.88,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      113,
+      115
+    ]
+  },
+  {
+    "id": 115,
+    "x": -114.51,
+    "y": 0,
+    "z": -197.25,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      114,
+      116
+    ]
+  },
+  {
+    "id": 116,
+    "x": -120.73,
+    "y": 0,
+    "z": -195.21,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      115,
+      117
+    ]
+  },
+  {
+    "id": 117,
+    "x": -125.54,
+    "y": 0,
+    "z": -194.72,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      116,
+      118
+    ]
+  },
+  {
+    "id": 118,
+    "x": -136.03,
+    "y": 0,
+    "z": -193.72,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      117,
+      119,
+      142
+    ]
+  },
+  {
+    "id": 119,
+    "x": -139.56,
+    "y": 0,
+    "z": -188.83,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      118,
+      120
+    ]
+  },
+  {
+    "id": 120,
+    "x": -143.76,
+    "y": 0,
+    "z": -187.71,
+    "type": "entry",
+    "number": "FKIP",
+    "neighbours": [
+      119,
+      121
+    ],
+    "forwardVector": {
+      "x": 0,
+      "y": 0.6293,
+      "z": 0,
+      "w": -0.7771
+    }
+  },
+  {
+    "id": 121,
+    "x": -140.44,
+    "y": 0,
+    "z": -183.6,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      120,
+      122
+    ]
+  },
+  {
+    "id": 122,
+    "x": -141.11,
+    "y": 0,
+    "z": -170.82,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      121,
+      126
+    ]
+  },
+  {
+    "id": 123,
+    "x": -141.22,
+    "y": 0,
+    "z": -163.26,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      126,
+      125
+    ]
+  },
+  {
+    "id": 124,
+    "x": -141.12,
+    "y": 0,
+    "z": -153.68,
+    "type": "entry",
+    "number": "FH",
+    "neighbours": [
+      125
+    ],
+    "forwardVector": {
+      "x": 0,
+      "y": 0.1478,
+      "z": 0,
+      "w": 0.989
+    }
+  },
+  {
+    "id": 125,
+    "x": -142.09,
+    "y": 0,
+    "z": -158.3,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      123,
+      124,
+      127
+    ]
+  },
+  {
+    "id": 126,
+    "x": -140.9,
+    "y": 0,
+    "z": -166.08,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      122,
+      123
+    ]
+  },
+  {
+    "id": 127,
+    "x": -133.6,
+    "y": 0,
+    "z": -159.71,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      125,
+      128
+    ]
+  },
+  {
+    "id": 128,
+    "x": -129.18,
+    "y": 0,
+    "z": -161.37,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      127,
+      141
+    ]
+  },
+  {
+    "id": 129,
+    "x": -121.12,
+    "y": 0,
+    "z": -162.26,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      141
+    ]
+  },
+  {
+    "id": 130,
+    "x": -119.8,
+    "y": 0,
+    "z": -160.6,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      131
+    ]
+  },
+  {
+    "id": 131,
+    "x": -121.23,
+    "y": 0,
+    "z": -155.71,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      130,
+      132
+    ]
+  },
+  {
+    "id": 132,
+    "x": -117.15,
+    "y": 0,
+    "z": -148.15,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      131,
+      133
+    ]
+  },
+  {
+    "id": 133,
+    "x": -115.05,
+    "y": 0,
+    "z": -141.81,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      132,
+      134
+    ]
+  },
+  {
+    "id": 134,
+    "x": -115.05,
+    "y": 0,
+    "z": -133.48,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      133,
+      135
+    ]
+  },
+  {
+    "id": 135,
+    "x": -113.29,
+    "y": 0,
+    "z": -126.5,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      134,
+      136
+    ]
+  },
+  {
+    "id": 136,
+    "x": -111.29,
+    "y": 0,
+    "z": -118.25,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      135,
+      137
+    ]
+  },
+  {
+    "id": 137,
+    "x": -104.23,
+    "y": 0,
+    "z": -109.81,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      136,
+      138
+    ]
+  },
+  {
+    "id": 138,
+    "x": -98.6,
+    "y": 0,
+    "z": -107.58,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      137,
+      139
+    ]
+  },
+  {
+    "id": 139,
+    "x": -89.87,
+    "y": 0,
+    "z": -106.92,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      138,
+      140
+    ]
+  },
+  {
+    "id": 140,
+    "x": -86.08,
+    "y": 0,
+    "z": -106.74,
+    "type": "entry",
+    "number": "FEB",
+    "neighbours": [
+      139
+    ],
+    "forwardVector": {
+      "x": 0,
+      "y": 0.0958,
+      "z": 0,
+      "w": 0.9954
+    }
+  },
+  {
+    "id": 141,
+    "x": -127.3,
+    "y": 0,
+    "z": -167.38,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      128,
+      142,
+      129
+    ]
+  },
+  {
+    "id": 142,
+    "x": -130.18,
+    "y": 0,
+    "z": -177.6,
+    "type": "path",
+    "number": null,
+    "neighbours": [
+      141,
+      118
+    ]
+  }
+]

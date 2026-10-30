@@ -1,0 +1,124 @@
+{
+  "project_info": {
+    "project_number": "1067066775868",
+    "project_id": "uika-navigasi",
+    "storage_bucket": "uika-navigasi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067066775868:android:25d7d1d1ee541b93966639",
+        "android_client_info": {
+          "package_name": "com.example.festunavigator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0XqculNFduKUljC-8OKLoCKlb7R829tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067066775868:android:2f54d69dc2101814966639",
+        "android_client_info": {
+          "package_name": "com.example.festunavigator.admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0XqculNFduKUljC-8OKLoCKlb7R829tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067066775868:android:bee1a0e53184b72c966639",
+        "android_client_info": {
+          "package_name": "com.example.festunavigator.user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0XqculNFduKUljC-8OKLoCKlb7R829tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067066775868:android:94dfdbd1de7774ef966639",
+        "android_client_info": {
+          "package_name": "com.uika.navigator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0XqculNFduKUljC-8OKLoCKlb7R829tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067066775868:android:ef3c1ad98e289125966639",
+        "android_client_info": {
+          "package_name": "com.uika.navigator.admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0XqculNFduKUljC-8OKLoCKlb7R829tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067066775868:android:283ec3f9043d07e8966639",
+        "android_client_info": {
+          "package_name": "com.uika.navigator.user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0XqculNFduKUljC-8OKLoCKlb7R829tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

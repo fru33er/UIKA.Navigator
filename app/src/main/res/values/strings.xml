@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name_user" translatable="false">Navigasi UIKA</string>
+    <string name="app_name_admin" translatable="false">Navigasi UIKA Admin</string>
+    <string name="initialize">Tolong inisialisasi grafiknya</string>
+    <string name="scan">
+Arahkan kamera ke tulisan penanda gedung </string>
+    <string name="orientate">Gerakkan Smartphone ke area sekitar dan arahkan ke tulisan penanda gedung</string>
+    <string name="link">Sambungkan</string>
+    <string name="delete">Hapus</string>
+    <string name="entry">Baru</string>
+    <string name="path">Path</string>
+    <string name="cancel">Batal</string>
+    <string name="confirm_place">Apakah posisi text sudah benar?</string>
+    <string name="from">Mulai</string>
+    <string name="to">Tujuan</string>
+    <string name="main">Main building</string>
+    <string name="lab">Laboratory</string>
+    <string name="first_tower">Tower №1</string>
+    <string name="second_tower">Tower №2</string>
+    <string name="second_building">Second building</string>
+    <string name="floor">floor №</string>
+    <string name="incorrect_number">Text Tidak Valid</string>
+    <string name="no_path">Tidak Ada Rute</string>
+    <string name="going">Tujuan ke: %1$s</string>
+    <string name="init_failed">Initialization failed</string>
+    <string name="install_arcode">Please, install ARCore</string>
+    <string name="update_arcode">Please, update ARCore</string>
+    <string name="update_app">Please, update this app</string>
+    <string name="no_arcore_support">This device does not support AR</string>
+    <string name="camera_not_available">Camera not available. Try restarting the app</string>
+    <string name="failed_to_create_session">Failed to create AR session</string>
+    <string name="provide_camera_permission">Please, provide the camera permission</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="entry_already_exists">Data Sudah Ada</string>
+    <string name="node_created">Node dibuat</string>
+    <string name="node_deleted">Node dihapus</string>
+    <string name="link_created">Sambungan dibuat</string>
+    <string name="start_typing" >Mulai Ketik…</string>
+    <string name="unknown_building">Bangunan tidak diketahui</string>
+
+
+</resources>

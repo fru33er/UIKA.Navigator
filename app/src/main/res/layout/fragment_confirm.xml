@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    tools:context=".presentation.confirmer.ConfirmFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/rounded"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="0dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="24dp">
+
+        <!-- Drag Handle -->
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/drag_handle" />
+
+        <!-- Icon + Confirm Text -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Konfirmasi Posisi"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/confirm_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/poppins_light"
+                android:gravity="center"
+                android:text="@string/confirm_place"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/reject_button"
+                style="@style/Button.UIKA.Danger"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/reject"
+                app:icon="@drawable/ic_reject"
+                app:iconGravity="textStart"
+                app:iconSize="18dp"
+                app:iconTint="@color/surface_white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/accept_button"
+                style="@style/Button.UIKA.Primary"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/accept"
+                app:icon="@drawable/ic_accept"
+                app:iconGravity="textStart"
+                app:iconSize="18dp"
+                app:iconTint="@color/surface_white" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
